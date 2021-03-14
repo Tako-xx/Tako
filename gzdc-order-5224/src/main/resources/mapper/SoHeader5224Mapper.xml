@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.gzdc.infra.mapper.SoHeader5224Mapper">
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap id="BaseResultMap" type="com.hand.gzdc.domain.vo.SoHeaderVO5224">
+        <result column="H_SO_HEADER_ID" property="hSoHeaderId" jdbcType="DECIMAL"/>
+        <result column="H_ORDER_NUMBER" property="hOrderNumber" jdbcType="VARCHAR"/>
+        <result column="H_COMPANY_ID" property="hCompanyId" jdbcType="DECIMAL"/>
+        <result column="H_ORDER_DATE" property="hOrderDate" jdbcType="VARCHAR"/>
+        <result column="H_ORDER_STATUS" property="hOrderStatus" jdbcType="VARCHAR"/>
+        <result column="H_CUSTOMER_ID" property="hCustomerId" jdbcType="DECIMAL"/>
+        <result column="H_CREATED_BY" property="hCreatedBy" jdbcType="DECIMAL"/>
+        <result column="H_CREATION_DATE" property="hCreationDate" jdbcType="DATE"/>
+        <result column="H_LAST_UPDATED_BY" property="hLastUpdatedBy" jdbcType="DECIMAL"/>
+        <result column="H_LAST_UPDATE_DATE" property="hLastUpdateDate" jdbcType="DATE"/>
+        <result column="H_OBJECT_VERSION_NUMBER" property="hObjectVersionNumber" jdbcType="DECIMAL"/>
+        <result column="H_COMPANY_NAME" property="hCompanyName" jdbcType="VARCHAR"/>
+        <result column="H_CUSTOMER_NUMBER" property="hCustomerNumber" jdbcType="VARCHAR"/>
+        <result column="H_CUSTOMER_NAME" property="hCustomerName" jdbcType="VARCHAR"/>
+        <result column="H_ORDER_AMOUNT" property="hOrderAmount" jdbcType="DECIMAL"/>
+        <collection property="soLineVO5224List" ofType="com.hand.gzdc.domain.vo.SoLineVO5224">
+            <result column="L_SO_LINE_ID" property="lSoLineId" jdbcType="DECIMAL"/>
+            <result column="L_SO_HEADER_ID" property="lSoHeaderId" jdbcType="DECIMAL"/>
+            <result column="L_LINE_NUMBER" property="lLineNumber" jdbcType="DECIMAL"/>
+            <result column="L_ITEM_ID" property="lItemId" jdbcType="DECIMAL"/>
+            <result column="L_ORDER_QUANTITY" property="lOrderQuantity" jdbcType="DECIMAL"/>
+            <result column="L_ORDER_QUANTITY_UOM" property="lOrderQuantityUom" jdbcType="VARCHAR"/>
+            <result column="L_UNIT_SELLING_PRICE" property="lUnitSellingPrice" jdbcType="DECIMAL"/>
+            <result column="L_DESCRIPTION" property="lDescription" jdbcType="VARCHAR"/>
+            <result column="L_ADDITION1" property="lAddition1" jdbcType="VARCHAR"/>
+            <result column="L_ADDITION2" property="lAddition2" jdbcType="VARCHAR"/>
+            <result column="L_ADDITION3" property="lAddition3" jdbcType="VARCHAR"/>
+            <result column="L_ADDITION4" property="lAddition4" jdbcType="VARCHAR"/>
+            <result column="L_ADDITION5" property="lAddition5" jdbcType="VARCHAR"/>
+            <result column="L_CREATED_BY" property="lCreatedBy" jdbcType="DECIMAL"/>
+            <result column="L_CREATION_DATE" property="lCreationDate" jdbcType="DATE"/>
+            <result column="L_LAST_UPDATED_BY" property="lLastUpdatedBy" jdbcType="DECIMAL"/>
+            <result column="L_LAST_UPDATE_DATE" property="lLastUpdateDate" jdbcType="DATE"/>
+            <result column="L_OBJECT_VERSION_NUMBER" property="lObjectVersionNumber" jdbcType="DECIMAL"/>
+            <result column="L_ITEM_CODE" property="lItemCode" jdbcType="VARCHAR"/>
+            <result column="L_ITEM_DESCRIPTION" property="lItemDescription" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <!--订单头行查询-->
+    <select id="querySoByObj" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT HSH.SO_HEADER_ID             AS H_SO_HEADER_ID
+              ,HSH.ORDER_NUMBER             AS H_ORDER_NUMBER
+              ,HSH.COMPANY_ID               AS H_COMPANY_ID
+              ,HCO.COMPANY_NAME             AS H_COMPANY_NAME
+              ,HSH.ORDER_DATE               AS H_ORDER_DATE
+              ,HSH.ORDER_STATUS             AS H_ORDER_STATUS
+              ,HSH.CUSTOMER_ID              AS H_CUSTOMER_ID
+              ,HCU.CUSTOMER_NUMBER          AS H_CUSTOMER_NUMBER
+              ,HCU.CUSTOMER_NAME            AS H_CUSTOMER_NAME
+              ,HSH.CREATED_BY               AS H_CREATED_BY
+              ,HSH.CREATION_DATE            AS H_CREATION_DATE
+              ,HSH.LAST_UPDATED_BY          AS H_LAST_UPDATED_BY
+              ,HSH.LAST_UPDATE_DATE         AS H_LAST_UPDATE_DATE
+              ,HSH.OBJECT_VERSION_NUMBER    AS H_OBJECT_VERSION_NUMBER
+              ,HSL.SO_LINE_ID               AS L_SO_LINE_ID
+              ,HSL.SO_HEADER_ID             AS L_SO_HEADER_ID
+              ,HSL.LINE_NUMBER              AS L_LINE_NUMBER
+              ,HSL.ITEM_ID                  AS L_ITEM_ID
+              ,HIT.ITEM_CODE                AS L_ITEM_CODE
+              ,HIT.ITEM_DESCRIPTION         AS L_ITEM_DESCRIPTION
+              ,HSL.ORDER_QUANTITY           AS L_ORDER_QUANTITY
+              ,HSL.ORDER_QUANTITY_UOM       AS L_ORDER_QUANTITY_UOM
+              ,HSL.UNIT_SELLING_PRICE       AS L_UNIT_SELLING_PRICE
+              ,HSL.DESCRIPTION              AS L_DESCRIPTION
+              ,HSL.ADDITION1                AS L_ADDITION1
+              ,HSL.ADDITION2                AS L_ADDITION2
+              ,HSL.ADDITION3                AS L_ADDITION3
+              ,HSL.ADDITION4                AS L_ADDITION4
+              ,HSL.ADDITION5                AS L_ADDITION5
+              ,HSL.CREATED_BY               AS L_CREATED_BY
+              ,HSL.CREATION_DATE            AS L_CREATION_DATE
+              ,HSL.LAST_UPDATED_BY          AS L_LAST_UPDATED_BY
+              ,HSL.LAST_UPDATE_DATE         AS L_LAST_UPDATE_DATE
+              ,HSL.OBJECT_VERSION_NUMBER    AS L_OBJECT_VERSION_NUMBER
+          FROM HODR_SO_HEADER_5224 HSH
+               LEFT JOIN HODR_SO_LINE_5224   HSL ON HSH.SO_HEADER_ID = HSL.SO_HEADER_ID
+               LEFT JOIN HODR_ITEM_5224      HIT ON HSL.ITEM_ID = HIT.ITEM_CODE
+              ,HODR_COMPANY_5224   HCO
+              ,HODR_CUSTOMER_5224  HCU
+         WHERE HSH.COMPANY_ID   = HCO.COMPANY_ID
+           AND HSH.COMPANY_ID   = HCU.COMPANY_ID
+           AND HSH.CUSTOMER_ID  = HCU.CUSTOMER_ID
+           AND HSH.SO_HEADER_ID = #{soHeaderId}
+    </select>
+    
+    <!--汇总订单查询-->
+    <select id="querySoCollect" parameterType="com.hand.gzdc.domain.entity.SoHeader5224" resultMap="BaseResultMap">
+        SELECT HSH.ORDER_NUMBER                                  AS H_ORDER_NUMBER
+              ,HCO.COMPANY_NAME                                  AS H_COMPANY_NAME
+              ,HCU.CUSTOMER_NAME                                 AS H_CUSTOMER_NAME
+              ,HSH.ORDER_DATE                                    AS H_ORDER_DATE
+              ,HSH.ORDER_STATUS                                  AS H_ORDER_STATUS
+              ,SUM(HSL.ORDER_QUANTITY * HSL.UNIT_SELLING_PRICE)  AS H_ORDER_AMOUNT
+          FROM HODR_SO_HEADER_5224 HSH
+     LEFT JOIN HODR_SO_LINE_5224   HSL ON HSH.SO_HEADER_ID = HSL.SO_HEADER_ID
+              ,HODR_COMPANY_5224   HCO
+              ,HODR_CUSTOMER_5224  HCU
+         WHERE HSH.COMPANY_ID  = HCO.COMPANY_ID
+           AND HSH.COMPANY_ID  = HCO.COMPANY_ID
+           AND HSH.CUSTOMER_ID = HCU.CUSTOMER_ID
+         <if test='companyId != null and companyId != ""'>
+           AND HSH.COMPANY_ID = #{companyId}
+         </if>
+         <if test='customerId != null and customerId != ""'>
+           AND HSH.CUSTOMER_ID = #{customerId}
+         </if>
+         <if test='orderNumber != null and orderNumber != ""'>
+           AND UPPER(HSH.ORDER_NUMBER) LIKE UPPER(CONCAT('%',#{orderNumber},'%'))
+         </if>
+         <if test='orderStatus != null and orderStatus != ""'>
+           AND HSH.ORDER_STATUS = #{orderStatus}
+         </if>
+      GROUP BY HSH.ORDER_NUMBER
+              ,HCO.COMPANY_NAME
+              ,HCU.CUSTOMER_NAME
+              ,HSH.ORDER_DATE
+              ,HSH.ORDER_STATUS
+      ORDER BY HSH.ORDER_DATE
+              ,HSH.ORDER_NUMBER
+    </select>
+    
+    <!--角色CODE查询-->
+    <select id="queryRoleCOde" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT CODE FROM HZERO_PLATFORM.IAM_ROLE WHERE ID = #{id}
+    </select>
+</mapper>

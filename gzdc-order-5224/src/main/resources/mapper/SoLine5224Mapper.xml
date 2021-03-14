@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.gzdc.infra.mapper.SoLine5224Mapper">
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap id="BaseResultMap" type="com.hand.gzdc.domain.entity.SoLine5224">
+        <result column="SO_LINE_ID" property="soLineId" jdbcType="DECIMAL"/>
+        <result column="SO_HEADER_ID" property="soHeaderId" jdbcType="DECIMAL"/>
+        <result column="LINE_NUMBER" property="lineNumber" jdbcType="DECIMAL"/>
+        <result column="ITEM_ID" property="itemId" jdbcType="DECIMAL"/>
+        <result column="ORDER_QUANTITY" property="orderQuantity" jdbcType="DECIMAL"/>
+        <result column="ORDER_QUANTITY_UOM" property="orderQuantityUom" jdbcType="VARCHAR"/>
+        <result column="UNIT_SELLING_PRICE" property="unitSellingPrice" jdbcType="DECIMAL"/>
+        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
+        <result column="ADDITION1" property="addition1" jdbcType="VARCHAR"/>
+        <result column="ADDITION2" property="addition2" jdbcType="VARCHAR"/>
+        <result column="ADDITION3" property="addition3" jdbcType="VARCHAR"/>
+        <result column="ADDITION4" property="addition4" jdbcType="VARCHAR"/>
+        <result column="ADDITION5" property="addition5" jdbcType="VARCHAR"/>
+        <result column="CREATED_BY" property="createdBy" jdbcType="DECIMAL"/>
+        <result column="CREATION_DATE" property="creationDate" jdbcType="DATE"/>
+        <result column="LAST_UPDATED_BY" property="lastUpdatedBy" jdbcType="DECIMAL"/>
+        <result column="LAST_UPDATE_DATE" property="lastUpdateDate" jdbcType="DATE"/>
+        <result column="OBJECT_VERSION_NUMBER" property="objectVersionNumber" jdbcType="DECIMAL"/>
+    </resultMap>
+</mapper>
